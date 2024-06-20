@@ -4,6 +4,7 @@ import { GeneralLogger } from './util/logger';
 import { join } from 'path';
 configDotenv({ path: join(__dirname, '../.env') });
 
+GeneralLogger.info(`Starting Cheddar Bot...`);
 const manager = new ShardingManager(join(__dirname, 'shard.js'), {
   token: process.env.DISCORD_TOKEN,
 });
