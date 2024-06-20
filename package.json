@@ -7,7 +7,7 @@
   "author": "ohmyshell",
   "license": "Apache-2.0",
   "scripts": {
-    "start": "node dist",
+    "start": "yarn install && yarn build &&node dist",
     "dev": "nodemon",
     "build": "tsc"
   },
