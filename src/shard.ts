@@ -3,7 +3,7 @@ import { configDotenv } from 'dotenv';
 import path from 'path';
 import { initClientEvents } from './client/events';
 import { initClientCommands } from './client/commands';
-import { ShardLogger } from './utitl/logger';
+import { ShardLogger } from './util/logger';
 configDotenv({ path: path.join(__dirname, '../.env') });
 
 const client = new Client({

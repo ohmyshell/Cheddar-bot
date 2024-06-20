@@ -1,5 +1,5 @@
 import { Client } from 'discord.js';
-import { ShardLogger } from '../utitl/logger';
+import { ShardLogger } from '../util/logger';
 import { BotEvent } from '../types';
 import { join } from 'path';
 

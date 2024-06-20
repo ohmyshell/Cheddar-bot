@@ -2,7 +2,7 @@ import { Client, REST, Routes, SlashCommandBuilder } from 'discord.js';
 import { readdirSync } from 'fs';
 import { join } from 'path';
 import { SlashCommand } from '../types';
-import { ShardLogger } from '../utitl/logger';
+import { ShardLogger } from '../util/logger';
 
 export const initClientCommands = (client: Client) => {
   const rest = new REST({ version: '10' }).setToken(
