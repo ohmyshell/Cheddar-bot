@@ -7,9 +7,11 @@ const events: BotEvent = {
   interactionCreate(interaction) {
     ShardLogger.info('Executing Interaction with type:  ' + interaction?.type);
     if (interaction.isCommand()) {
-      require(join(__dirname, 'commands', interaction?.commandName)).execute(
-        interaction
-      );
+      require(join(
+        __dirname,
+        'commands',
+        interaction?.commandName
+      )).default.execute(interaction);
     }
   },
   error(error) {
