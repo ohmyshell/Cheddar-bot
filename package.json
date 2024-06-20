@@ -7,7 +7,7 @@
   "author": "ohmyshell",
   "license": "Apache-2.0",
   "scripts": {
-    "start": "node ./dist",
+    "start": "tsc && node ./dist",
     "dev": "nodemon",
     "build": "tsc"
   },
