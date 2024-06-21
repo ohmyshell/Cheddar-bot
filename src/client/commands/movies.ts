@@ -80,6 +80,7 @@ export default {
             });
             break;
         }
+        break;
       case 'search':
         const movieName = interaction.options.getString('moviename');
         client.logger.info(`Searching for movie: ${movieName}`);
