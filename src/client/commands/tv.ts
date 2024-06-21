@@ -1,6 +1,7 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { SlashCommand } from '../../types';
 import {
+  discoverTvShow,
   getPopularTv,
   getTrendingTv,
   getUpcomingTv,
@@ -25,6 +26,7 @@ export default {
               { name: 'Trending', value: 'trending' },
               { name: 'Popular', value: 'popular' },
               { name: 'Upcoming', value: 'upcoming' },
+              { name: 'Discover', value: 'discover' },
             ])
         )
     )
@@ -73,6 +75,16 @@ export default {
               .map(tmdbEntityToEmbed);
             await interaction.editReply({
               embeds: upcomingTvShowEmbeds,
+            });
+            break;
+          }
+          case 'discover': {
+            const discoverTvShows = await discoverTvShow({});
+            const discoverTvShowEmbeds = discoverTvShows.results
+              .slice(0, 5)
+              .map(tmdbEntityToEmbed);
+            await interaction.editReply({
+              embeds: discoverTvShowEmbeds,
             });
             break;
           }

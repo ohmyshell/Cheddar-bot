@@ -1,6 +1,7 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { SlashCommand } from '../../types';
 import {
+  discoverMovie,
   getPopularMovies,
   getTrendingMovies,
   getUpcomingMovies,
@@ -25,6 +26,7 @@ export default {
               { name: 'Trending', value: 'trending' },
               { name: 'Popular', value: 'popular' },
               { name: 'Upcoming', value: 'upcoming' },
+              { name: 'Discover', value: 'discover' },
             ])
         )
     )
@@ -73,6 +75,16 @@ export default {
               .map(tmdbEntityToEmbed);
             await interaction.editReply({
               embeds: upcomingMoviesEmbeds,
+            });
+            break;
+          }
+          case 'discover': {
+            const movies = await discoverMovie({ include_adult: true });
+            const moviesEmbeds = movies.results
+              .slice(0, 5)
+              .map(tmdbEntityToEmbed);
+            await interaction.editReply({
+              embeds: moviesEmbeds,
             });
             break;
           }
