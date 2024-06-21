@@ -2,14 +2,14 @@ import { Client, REST, Routes, SlashCommandBuilder } from 'discord.js';
 import { readdirSync } from 'fs';
 import { join } from 'path';
 import { SlashCommand } from '../types';
-import { ShardLogger } from '../util/logger';
+import { FileLogger } from '../util/logger';
 
 export const initClientCommands = (client: Client) => {
   const rest = new REST({ version: '10' }).setToken(
     process.env.DISCORD_TOKEN as string
   );
 
-  const slashCommandsDir = join(__dirname, './commands');
+  const slashCommandsDir = join(__dirname, 'commands');
   const slashCommands: SlashCommandBuilder[] = [];
 
   readdirSync(slashCommandsDir).forEach((file) => {
@@ -23,7 +23,10 @@ export const initClientCommands = (client: Client) => {
       body: slashCommands.map((command) => command.toJSON()),
     })
     .then((data: any) =>
-      ShardLogger.info(`Registered ${data.length} slash command(s).`)
+      client.logger.info(`Registered ${data.length} slash command(s).`)
     )
-    .catch((error) => ShardLogger.error(error));
+    .catch((error) => {
+      client.logger.fatal(error);
+      FileLogger.fatal(error);
+    });
 };

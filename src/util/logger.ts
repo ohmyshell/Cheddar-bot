@@ -27,14 +27,14 @@ export const ShardLogger = pino(
     messageKey: 'msg',
     errorProps: 'type,message,stack',
     messageFormat: (log, messageKey, levelLabel, { colors }) => {
-      return colors.redBright(log[messageKey] as string);
+      return colors.yellowBright(log[messageKey] as string);
     },
   })
 );
 
 export const ApiLogger = pino(
   {
-    name: 'Cheddar (Shard)',
+    name: 'Cheddar (API)',
     level: (process.env.LOG_LEVEL || 'info').toLowerCase(),
   },
   PinoPretty({
@@ -43,7 +43,7 @@ export const ApiLogger = pino(
     translateTime: 'dd-mm-yyyy HH:MM:ss <o>',
     colorizeObjects: true,
     messageFormat: (log, levelLabel, messageKey, { colors }) =>
-      colors.redBright(log.msg as string),
+      colors.bgMagenta(log.msg as string),
   })
 );
 

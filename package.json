@@ -1,11 +1,14 @@
 {
-  "name": "Cheddar",
+  "name": "cheddar",
   "version": "0.0.1",
   "description": "Cheddar discord bot",
   "main": "index.ts",
   "repository": "https://github.com/ohmyshell/Cheddar-bot.git",
   "author": "ohmyshell",
   "license": "Apache-2.0",
+  "engines": {
+    "node": ">= 18.20.0"
+  },
   "scripts": {
     "start": "node dist",
     "dev": "nodemon",

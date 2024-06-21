@@ -1,52 +1,60 @@
-import { Client } from 'discord.js';
+import { ActivityType, Client } from 'discord.js';
 import { ShardLogger } from '../util/logger';
 import { BotEvent } from '../types';
 import { join } from 'path';
 
 const events: BotEvent = {
-  interactionCreate(interaction) {
-    ShardLogger.info('Executing Interaction with type:  ' + interaction?.type);
-    if (interaction.isCommand()) {
-      require(join(
+  async interactionCreate(client, interaction) {
+    if (interaction.isChatInputCommand()) {
+      await require(join(
         __dirname,
         'commands',
         interaction?.commandName
-      )).default.execute(interaction);
+      )).default.execute(client, interaction);
+    } else if (interaction.isAnySelectMenu()) {
+    } else if (interaction.isAutocomplete()) {
+    } else if (interaction.isButton()) {
+    } else if (interaction.isModalSubmit()) {
     }
   },
-  error(error) {
-    ShardLogger.error(error);
+  error(client, error) {
+    client.logger.error(error);
   },
-  debug(message) {
-    ShardLogger.debug(message);
+  debug(client, message) {
+    client.logger.debug(message);
   },
-  warn(warning) {
-    ShardLogger.warn(warning);
+  warn(client, warning) {
+    client.logger.warn(warning);
   },
-  shardDisconnect(closeEvent, shardId) {
-    ShardLogger.warn('Shard ' + shardId + ' disconnected: ' + closeEvent);
+  shardDisconnect(client, closeEvent, shardId) {
+    client.logger.warn('Shard ' + shardId + ' disconnected: ' + closeEvent);
   },
-  shardError(error, shardId) {
-    ShardLogger.error('Shard ' + shardId + ' errored: ' + error);
+  shardError(client, error, shardId) {
+    client.logger.error('Shard ' + shardId + ' errored: ' + error);
   },
-  shardReady(shardId) {
-    ShardLogger.info('Shard ' + shardId + ' ready!');
+  shardReady(client, shardId) {
+    client.logger.info('Shard ' + shardId + ' ready!');
   },
-  shardReconnecting(shardId) {
-    ShardLogger.info('Shard ' + shardId + ' reconnecting...');
+  shardReconnecting(client, shardId) {
+    client.logger.info('Shard ' + shardId + ' reconnecting...');
   },
-  shardResume(shardId, replayedEvents) {
-    ShardLogger.info(
+  shardResume(client, shardId, replayedEvents) {
+    client.logger.info(
       'Shard ' + shardId + ' resumed with ' + replayedEvents + ' events'
     );
   },
   ready(client) {
-    ShardLogger.info('Client ready on shard: ' + client.shard?.ids);
+    client.logger.info('Client ready on shard: ' + client.shard?.ids);
+    client.user?.setActivity("🧀 It ain't easy being cheesy", {
+      type: ActivityType.Custom,
+    });
   },
 };
 
 export const initClientEvents = (client: Client) => {
   Object.entries(events).forEach(([eventType, handler]) => {
-    client.on(eventType, handler);
+    client.on(eventType, (...args) =>
+      handler(client, ...(args as unknown as never[]))
+    );
   });
 };

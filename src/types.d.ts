@@ -2,6 +2,7 @@ import {
   AutocompleteInteraction,
   CacheType,
   ChatInputCommandInteraction,
+  Client,
   ClientEvents,
   ModalSubmitInteraction,
   SlashCommandBuilder,
@@ -10,12 +11,22 @@ import { once } from 'events';
 
 export interface SlashCommand {
   command: SlashCommandBuilder;
-  execute: (interaction: ChatInputCommandInteraction) => void;
+  execute: (client: Client, interaction: ChatInputCommandInteraction) => void;
   autocomplete?: (interaction: AutocompleteInteraction) => void;
   modal?: (interaction: ModalSubmitInteraction<CacheType>) => void;
   cooldown?: number; // in seconds
 }
 
 export type BotEvent = {
-  [K in keyof Partial<ClientEvents>]: (...args: ClientEvents[K]) => void;
+  [K in keyof Partial<ClientEvents>]: (
+    client: Client,
+    ...args: ClientEvents[K]
+  ) => void;
 };
+
+declare module 'discord.js' {
+  export interface Client {
+    logger?: pino.Logger;
+    db?: any;
+  }
+}
