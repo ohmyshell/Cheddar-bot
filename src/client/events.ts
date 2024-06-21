@@ -1,5 +1,5 @@
 import { ActivityType, Client } from 'discord.js';
-import { ShardLogger } from '../util/logger';
+import { FileLogger, ShardLogger } from '../util/logger';
 import { BotEvent } from '../types';
 import { join } from 'path';
 
@@ -18,12 +18,15 @@ const events: BotEvent = {
     }
   },
   error(client, error) {
+    FileLogger.error(error);
     client.logger.error(error);
   },
   debug(client, message) {
+    FileLogger.debug(message);
     client.logger.debug(message);
   },
   warn(client, warning) {
+    FileLogger.warn(warning);
     client.logger.warn(warning);
   },
   shardDisconnect(client, closeEvent, shardId) {

@@ -2,6 +2,7 @@ import { SlashCommandBuilder } from 'discord.js';
 import { SlashCommand } from '../../types';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { newFitGirlPosts } from '../../api/fitgirl';
 
 export default {
   command: new SlashCommandBuilder()

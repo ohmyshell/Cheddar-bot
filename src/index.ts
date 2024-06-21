@@ -2,6 +2,7 @@ import { ShardingManager } from 'discord.js';
 import { configDotenv } from 'dotenv';
 import { GeneralLogger } from './util/logger';
 import { join } from 'path';
+import { newFitGirlPosts } from './api/fitgirl';
 configDotenv({ path: join(__dirname, '../.env') });
 
 GeneralLogger.info(`Starting Cheddar Bot...`);
