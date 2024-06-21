@@ -91,7 +91,7 @@ export default {
           break;
         }
         const movies = await searchMovie(movieName);
-        if (!movies || !movies.results) {
+        if (!movies || !movies.results || movies.results.length === 0) {
           await interaction.editReply({
             content: 'Movie not found',
           });
